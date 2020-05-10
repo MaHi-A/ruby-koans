@@ -16,7 +16,9 @@
 def triangle(a, b, c)
   raise TriangleError if [a, b, c].min <= 0
 
-  if a == b && b == c && c == a
+  raise TriangleError if (a + b <= c) || (b + c <= a) || (c + a <= b)
+
+  if a == b && b == c
     :equilateral
   elsif a == b || b == c || c == a
     :isosceles
