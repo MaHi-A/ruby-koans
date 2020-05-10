@@ -31,9 +31,17 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  score = 0
-
-  return score if dice.empty?
+  (1..6).map do |roll|
+    roll_count = dice.count(roll)
+    case roll
+    when 1
+      1000 * (roll_count / 3) + 100 * (roll_count % 3)
+    when 5
+      500 * (roll_count / 3) + 50 * (roll_count % 3)
+    else 
+      100 * roll * (roll_count / 3)
+    end
+  end.inject(0) {|sum, n| sum + n}
 end
 
 class AboutScoringProject < Neo::Koan
@@ -76,5 +84,4 @@ class AboutScoringProject < Neo::Koan
     assert_equal 1200, score([1,1,1,1,1])
     assert_equal 1150, score([1,1,1,5,1])
   end
-
 end
